@@ -29,7 +29,17 @@ module.exports = {
       test: /\.styl$/, 
       include: path.join(__dirname, 'client'),
       loader: 'style-loader!css-loader!stylus-loader'
-    }
+    },
+    //JSX
+    {
+      test: /\.jsx?$/,
+      exclude: /node_modules/,
+      loaders: ['babel-loader?presets[]=react,presets[]=es2015'],
+      //loaders: ["react-hot", 'babel-loader'],
+      //query: {
+      //    presets : ['es2015', 'react']
+      //}
+  },
     ]
   }
 };
