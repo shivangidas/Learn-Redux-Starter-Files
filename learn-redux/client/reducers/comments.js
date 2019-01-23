@@ -1,15 +1,28 @@
-function comments(state = [], action){
-    switch (action.type){
-        case 'ADD_COMMENT': 
-            const i = action.postId
-            const author = action.author
-            const comment = action.comment
-            return [
-                ...state.slice(0,i),
-                {...state[i], likes: state[i].likes +1 },
-                ...state.slice(i +1)
-            ]
-        default: return state
-    }
+function postComments(state = [], action) {
+  switch (action.type) {
+    case "ADD_COMMENT":
+      return [
+        ...state,
+        {
+          user: action.author,
+          text: action.comment
+        }
+      ];
+    case "REMOVE_COMMENT":
+      const i = action.i;
+      return [...state.slice(0, i), ...state.slice(i + 1)];
+    default:
+      return state;
+  }
 }
-export default comments
+
+function comments(state = [], action) {
+  if (typeof action.postId !== "undefined") {
+    return {
+      ...state,
+      [action.postId]: postComments(state[action.postId], action)
+    };
+  }
+  return state;
+}
+export default comments;
